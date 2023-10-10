@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loja</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin: 20px auto;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: black;
+            color: white;
+        }
+        td {
+            background-color: red;
+            color: black;
+        }
+        input[type="number"] {
+            width: 40px;
+        }
+        .cart {
+            text-align: right;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Produtos</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Ação</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>Camisa</td>
+            <td>R$ 200,00</td>
+            <td>
+                <form method="post" action="cart.php?action=add">
+                    <input type="hidden" name="id" value="1">
+                    <input type="hidden" name="nome" value="Camisa">
+                    <input type="hidden" name="preco" value="200">
+                    <input type="number" name="quantidade" value="1">
+                    <input type="submit" value="Adicionar ao Carrinho">
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Chuteira</td>
+            <td>R$ 100,00</td>
+            <td>
+                <form method="post" action="cart.php?action=add">
+                    <input type="hidden" name="id" value="2">
+                    <input type="hidden" name="nome" value="Chuteira">
+                    <input type="hidden" name="preco" value="100">
+                    <input type="number" name="quantidade" value="1">
+                    <input type="submit" value="Adicionar ao Carrinho">
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Boné</td>
+            <td>R$ 50,00</td>
+            <td>
+                <form method="post" action="cart.php?action=add">
+                    <input type="hidden" name="id" value="3">
+                    <input type="hidden" name="nome" value="Boné">
+                    <input type="hidden" name="preco" value="50">
+                    <input type="number" name="quantidade" value="1">
+                    <input type="submit" value="Adicionar ao Carrinho">
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <h1>Carrinho de Compras</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Quantidade</th>
+            <th>Valor Unitário</th>
+            <th>Valor Total</th>
+            <th>Ação</th>
+        </tr>
+        <?php include 'cart.php'; showCart(); ?>
+    </table>
+
+    <div class="cart">
+        <h3>Total: R$ <?php echo getTotal(); ?></h3>
+    </div>
+  <div>
+<img src="https://i0.wp.com/techwek.com/wp-content/uploads/2021/10/Papel-de-parede-do-melhor-time.jpg?fit=631%2C1024&ssl=1" alt="Trulli" width="300" height="300">
+    
+  </div>
+</body>
+</html>
