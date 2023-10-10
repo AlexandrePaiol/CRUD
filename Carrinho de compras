@@ -1,0 +1,68 @@
+<?php
+session_start();
+
+function addToCart($id, $nome, $preco, $quantidade) {
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
+    }
+
+    $item = [
+        'id' => $id,
+        'nome' => $nome,
+        'preco' => $preco,
+        'quantidade' => $quantidade
+    ];
+
+    $_SESSION['cart'][] = $item;
+}
+
+function removeFromCart($id) {
+    if (isset($_SESSION['cart'])) {
+        foreach ($_SESSION['cart'] as $key => $item) {
+            if ($item['id'] == $id) {
+                unset($_SESSION['cart'][$key]);
+                break;
+            }
+        }
+    }
+}
+
+function showCart() {
+    if (isset($_SESSION['cart'])) {
+        $total = 0;
+        foreach ($_SESSION['cart'] as $item) {
+            $valorTotal = $item['quantidade'] * $item['preco'];
+            $total += $valorTotal;
+            echo "<tr>";
+            echo "<td>{$item['id']}</td>";
+            echo "<td>{$item['nome']}</td>";
+            echo "<td>{$item['quantidade']}</td>";
+            echo "<td>R$ {$item['preco']}</td>";
+            echo "<td>R$ $valorTotal</td>";
+            echo "<td><a href='cart.php?action=remove&id={$item['id']}'>Remover</a></td>";
+            echo "</tr>";
+        }
+    }
+}
+
+function getTotal() {
+    if (isset($_SESSION['cart'])) {
+        $total = 0;
+        foreach ($_SESSION['cart'] as $item) {
+            $total += $item['quantidade'] * $item['preco'];
+        }
+        return number_format($total, 2);
+    }
+    return "0.00";
+}
+
+if (isset($_GET['action'])) {
+    if ($_GET['action'] == 'add' && isset($_POST['id'], $_POST['nome'], $_POST['preco'], $_POST['quantidade'])) {
+        addToCart($_POST['id'], $_POST['nome'], $_POST['preco'], $_POST['quantidade']);
+        header('Location: index.php');
+    } elseif ($_GET['action'] == 'remove' && isset($_GET['id'])) {
+        removeFromCart($_GET['id']);
+        header('Location: index.php');
+    }
+}
+?>
